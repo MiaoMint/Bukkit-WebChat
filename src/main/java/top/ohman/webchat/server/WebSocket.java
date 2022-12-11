@@ -2,12 +2,10 @@ package top.ohman.webchat.server;
 
 import com.alibaba.fastjson2.JSON;
 import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
 import org.java_websocket.handshake.ClientHandshake;
 import org.java_websocket.server.WebSocketServer;
 import top.ohman.webchat.WebChat;
 import top.ohman.webchat.model.Chat;
-
 
 import java.net.InetSocketAddress;
 import java.util.ArrayList;
@@ -35,6 +33,7 @@ public class WebSocket extends WebSocketServer {
                 name,
                 "system"
         )));
+        Bukkit.getLogger().info(name + " is online");
 //        发送当前在线玩家
         conn.send(JSON.toJSONString(new Chat(
                 "system",
@@ -45,10 +44,10 @@ public class WebSocket extends WebSocketServer {
 
     @Override
     public void onClose(org.java_websocket.WebSocket conn, int code, String reason, boolean remote) {
-        guestName.remove(conn.toString());
         conns.remove(conn);
         conn.close();
-        Bukkit.getLogger().info(guestName.get(conn.toString()) + "is offline");
+        Bukkit.getLogger().info(guestName.get(conn.toString()) + " is offline");
+        guestName.remove(conn.toString());
     }
 
     @Override
@@ -58,10 +57,8 @@ public class WebSocket extends WebSocketServer {
         sendMsg(new Chat(
                 name,
                 s1));
-        for (Player player : Bukkit.getOnlinePlayers()) {
-            player.sendMessage(Objects.requireNonNull(WebChat.config.getString("WebSendMessage"))
-                    .replace("[name]", name).replace("[content]", s1));
-        }
+        Bukkit.getServer().broadcast(Objects.requireNonNull(WebChat.config.getString("WebSendMessage"))
+                .replace("[name]", name).replace("[content]", s1), "webchat.receive");
     }
 
     @Override
@@ -91,12 +88,10 @@ public class WebSocket extends WebSocketServer {
     }
 
     public static void sendMsg(Chat chat) {
-        new Thread(() -> {
-            for (org.java_websocket.WebSocket conn : conns) {
-                if (conn.isOpen()) {
-                    conn.send(JSON.toJSONString(chat));
-                }
+        for (org.java_websocket.WebSocket conn : conns) {
+            if (conn.isOpen()) {
+                conn.send(JSON.toJSONString(chat));
             }
-        }).start();
+        }
     }
 }

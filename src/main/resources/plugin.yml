@@ -4,3 +4,7 @@ main: top.ohman.webchat.WebChat
 api-version: 1.15
 authors: [ MiaoMint ]
 website: https://ohman.top
+permissions:
+  webchat.receive:
+    description: 接收web发来的消息
+    default: true

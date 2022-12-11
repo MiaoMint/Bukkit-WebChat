@@ -1,3 +1,4 @@
+#玩家若要屏蔽信息去掉[webchat.receive]权限即可
 # WebSocket端口
 WebSocketPort: 1145
 #web转发到游戏的显示

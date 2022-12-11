@@ -12,6 +12,7 @@ public final class WebChat extends JavaPlugin {
         super.onEnable();
         saveDefaultConfig();
         config = getConfig();
+
         WebSocket.startServer();
         Bukkit.getPluginManager().registerEvents(new Listener(), this);
         getLogger().info("WebChat is enable");
