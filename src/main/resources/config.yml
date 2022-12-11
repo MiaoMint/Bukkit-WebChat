@@ -1,0 +1,17 @@
+# WebSocket端口
+WebSocketPort: 1145
+#web转发到游戏的显示
+#[name] 将替换发送名字
+#[content] 将替换发送内容
+#使用§可以附上颜色等
+WebSendMessage: "§7[[name]] : [content]"
+#生成游客名字前缀
+WebSenderNamePrefix: "游客"
+#启用加入服务器提示
+EnableJoinServerMessage: true
+#启用离开服务器提示
+EnableQuitServerMessage: true
+#启用玩家死亡提示
+EnableDeathMessage: true
+#启用玩家进度提示
+EnableAdvancementMessage: true

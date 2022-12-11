@@ -1,0 +1,6 @@
+name: WebChat
+version: '${version}'
+main: top.ohman.webchat.WebChat
+api-version: 1.15
+authors: [ MiaoMint ]
+website: https://ohman.top
